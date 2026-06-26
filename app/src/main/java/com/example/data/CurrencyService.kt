@@ -2,6 +2,8 @@ package com.example.data
 
 import android.content.Context
 import android.util.Log
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKey
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
@@ -11,7 +13,17 @@ import java.io.BufferedReader
 import java.io.InputStreamReader
 
 class CurrencyService(context: Context) {
-    private val prefs = context.getSharedPreferences("currency_cache", Context.MODE_PRIVATE)
+    private val masterKey = MasterKey.Builder(context)
+        .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+        .build()
+
+    private val prefs = EncryptedSharedPreferences.create(
+        context,
+        "currency_secure_cache",
+        masterKey,
+        EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+        EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+    )
 
     companion object {
         private const val TAG = "CurrencyService"
