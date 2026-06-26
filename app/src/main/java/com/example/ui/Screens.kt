@@ -151,7 +151,7 @@ fun BottomNavBar(currentScreen: Screen, onScreenSelected: (Screen) -> Unit) {
             selected = currentScreen == Screen.Transactions,
             onClick = { onScreenSelected(Screen.Transactions) },
             icon = { Icon(Icons.Default.List, contentDescription = "Transações") },
-            label = { Text("Lançamentos", fontSize = 11.sp) }
+            label = { Text("Extrato", fontSize = 11.sp, maxLines = 1, overflow = TextOverflow.Ellipsis) }
         )
         NavigationBarItem(
             selected = currentScreen == Screen.AddTransaction,
