@@ -1,0 +1,6 @@
+{
+  "name": "Finanças MT",
+  "description": "Aplicativo de gestão financeira pessoal completo para Moçambique com controle de carteiras, categorias, metas, fechamento diário, multi-moeda e relatórios.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
