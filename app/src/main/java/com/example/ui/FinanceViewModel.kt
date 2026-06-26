@@ -19,6 +19,7 @@ sealed class Screen {
     object Settings : Screen()
     object Goals : Screen()
     object Loans : Screen()
+    object Categories : Screen()
 }
 
 class FinanceViewModel(application: Application) : AndroidViewModel(application) {
@@ -29,8 +30,9 @@ class FinanceViewModel(application: Application) : AndroidViewModel(application)
 
     // UI State and Screen Navigation
     var currentScreen by mutableStateOf<Screen>(Screen.Dashboard)
-    var isAppUnlocked by mutableStateOf(!settingsManager.pinEnabled)
+    var isAppUnlocked by mutableStateOf(!(settingsManager.pinEnabled || settingsManager.biometricEnabled))
     var pinErrorMsg by mutableStateOf("")
+    var transactionToEdit by mutableStateOf<Transaction?>(null)
 
     // Data Flows from Room
     val wallets = repository.wallets.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
@@ -48,6 +50,7 @@ class FinanceViewModel(application: Application) : AndroidViewModel(application)
     var isBalanceHidden by mutableStateOf(settingsManager.hideBalances)
     var isNotificationsEnabled by mutableStateOf(settingsManager.notificationsEnabled)
     var isPinEnabled by mutableStateOf(settingsManager.pinEnabled)
+    var isBiometricEnabled by mutableStateOf(settingsManager.biometricEnabled)
     var pinCode by mutableStateOf(settingsManager.pinHash)
 
     // Current daily closure state
@@ -110,6 +113,7 @@ class FinanceViewModel(application: Application) : AndroidViewModel(application)
         currency: String,
         timestamp: Long = System.currentTimeMillis(),
         isRecurrent: Boolean = false,
+        recurrencePeriod: String = "Mensal",
         onDuplicateWarning: (suspend () -> Unit)? = null,
         onComplete: () -> Unit
     ) {
@@ -128,6 +132,7 @@ class FinanceViewModel(application: Application) : AndroidViewModel(application)
                     type = type,
                     walletId = walletId,
                     isRecurrent = isRecurrent,
+                    recurrencePeriod = recurrencePeriod,
                     receiptUrl = if (currency != "MT") currency else null // we hijack receiptUrl to save currency label if any, for visual trace
                 )
                 repository.insertTransaction(tx)
@@ -366,8 +371,15 @@ class FinanceViewModel(application: Application) : AndroidViewModel(application)
             isPinEnabled = false
             settingsManager.pinHash = ""
             settingsManager.pinEnabled = false
+            isBiometricEnabled = false
+            settingsManager.biometricEnabled = false
             isAppUnlocked = true
         }
+    }
+
+    fun toggleBiometric(enabled: Boolean) {
+        isBiometricEnabled = enabled
+        settingsManager.biometricEnabled = enabled
     }
 
     fun unlockApp(pin: String): Boolean {

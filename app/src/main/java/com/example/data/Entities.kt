@@ -35,7 +35,8 @@ data class Transaction(
     val receiptUrl: String? = null, // Path to image/file
     val isRecurrent: Boolean = false,
     val isAdjustment: Boolean = false,
-    val isDeleted: Boolean = false // soft delete support for Recycle Bin (Lixeira)
+    val isDeleted: Boolean = false, // soft delete support for Recycle Bin (Lixeira)
+    val recurrencePeriod: String = "Mensal"
 )
 
 @Entity(tableName = "daily_closures")

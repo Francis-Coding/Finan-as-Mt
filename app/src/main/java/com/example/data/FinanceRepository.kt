@@ -42,16 +42,16 @@ class FinanceRepository(private val context: Context, private val db: AppDatabas
         val categoriesList = categoryDao.getAllCategories().first()
         if (categoriesList.isEmpty()) {
             val defaults = listOf(
-                Category(name = "Alimentação", icon = "A", color = "#E57373", type = "Despesa", monthlyLimit = 3000.0),
-                Category(name = "Transporte", icon = "T", color = "#64B5F6", type = "Despesa", monthlyLimit = 1500.0),
-                Category(name = "Educação", icon = "E", color = "#9575CD", type = "Despesa", monthlyLimit = 5000.0),
-                Category(name = "Saúde", icon = "S", color = "#81C784", type = "Despesa", monthlyLimit = 1000.0),
-                Category(name = "Lazer", icon = "L", color = "#FFD54F", type = "Despesa", monthlyLimit = 2000.0),
-                Category(name = "Salário", icon = "S", color = "#4DB6AC", type = "Injecao"),
-                Category(name = "Vendas", icon = "V", color = "#AED581", type = "Injecao"),
-                Category(name = "Empréstimos", icon = "E", color = "#FF8A65", type = "Injecao"),
-                Category(name = "Outros", icon = "O", color = "#A1887F", type = "Despesa"),
-                Category(name = "Ajuste", icon = "A", color = "#90A4AE", type = "Despesa")
+                Category(name = "Alimentação", icon = "🍔", color = "#E57373", type = "Despesa", monthlyLimit = 3000.0),
+                Category(name = "Transporte", icon = "🚌", color = "#64B5F6", type = "Despesa", monthlyLimit = 1500.0),
+                Category(name = "Educação", icon = "📚", color = "#9575CD", type = "Despesa", monthlyLimit = 5000.0),
+                Category(name = "Saúde", icon = "🏥", color = "#81C784", type = "Despesa", monthlyLimit = 1000.0),
+                Category(name = "Lazer", icon = "🎮", color = "#FFD54F", type = "Despesa", monthlyLimit = 2000.0),
+                Category(name = "Salário", icon = "💰", color = "#4DB6AC", type = "Injecao"),
+                Category(name = "Vendas", icon = "📈", color = "#AED581", type = "Injecao"),
+                Category(name = "Empréstimos", icon = "🏦", color = "#FF8A65", type = "Injecao"),
+                Category(name = "Outros", icon = "📦", color = "#A1887F", type = "Despesa"),
+                Category(name = "Ajuste", icon = "⚙️", color = "#90A4AE", type = "Despesa")
             )
             for (category in defaults) {
                 categoryDao.insertCategory(category)

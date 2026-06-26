@@ -26,6 +26,7 @@ class SettingsManager(context: Context) {
         const val KEY_NOTIFICATIONS_ENABLED = "notifications_enabled"
         const val KEY_PIN_HASH = "pin_hash"
         const val KEY_PIN_ENABLED = "pin_enabled"
+        const val KEY_BIOMETRIC_ENABLED = "biometric_enabled"
         const val KEY_LAST_OPENED_DATE = "last_opened_date"
     }
 
@@ -56,6 +57,10 @@ class SettingsManager(context: Context) {
     var pinEnabled: Boolean
         get() = prefs.getBoolean(KEY_PIN_ENABLED, false)
         set(value) = prefs.edit().putBoolean(KEY_PIN_ENABLED, value).apply()
+
+    var biometricEnabled: Boolean
+        get() = prefs.getBoolean(KEY_BIOMETRIC_ENABLED, false)
+        set(value) = prefs.edit().putBoolean(KEY_BIOMETRIC_ENABLED, value).apply()
 
     var lastOpenedDate: Long
         get() = prefs.getLong(KEY_LAST_OPENED_DATE, 0L)
